@@ -91,6 +91,31 @@ syncHeaderState();
 
 const revealItems = document.querySelectorAll(".reveal");
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const magneticButtons = prefersReducedMotion
+  ? []
+  : Array.from(document.querySelectorAll("[data-magnetic]"));
+
+magneticButtons.forEach((button) => {
+  const resetButtonPosition = () => {
+    button.style.setProperty("--button-shift-x", "0px");
+    button.style.setProperty("--button-shift-y", "0px");
+  };
+
+  button.addEventListener("pointermove", (event) => {
+    const rect = button.getBoundingClientRect();
+    const offsetX = ((event.clientX - rect.left) / rect.width - 0.5) * 14;
+    const offsetY = ((event.clientY - rect.top) / rect.height - 0.5) * 10;
+
+    button.style.setProperty("--button-shift-x", `${offsetX.toFixed(2)}px`);
+    button.style.setProperty("--button-shift-y", `${offsetY.toFixed(2)}px`);
+  });
+
+  button.addEventListener("pointerleave", () => {
+    resetButtonPosition();
+  });
+
+  button.addEventListener("blur", resetButtonPosition);
+});
 
 if (prefersReducedMotion || !("IntersectionObserver" in window)) {
   revealItems.forEach((item) => item.classList.add("is-visible"));
