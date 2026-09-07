@@ -119,8 +119,8 @@ function scheduleHeroThree() {
   const interactiveSurface = heroThreeShell.closest(".hero-visual");
 
   if (interactiveSurface) {
-    interactiveSurface.addEventListener("pointerenter", requestHeroThree, { once: true });
-    interactiveSurface.addEventListener("focusin", requestHeroThree, { once: true });
+    interactiveSurface.addEventListener("pointermove", requestHeroThree, { once: true, passive: true });
+    interactiveSurface.addEventListener("click", requestHeroThree, { once: true });
     interactiveSurface.addEventListener("touchstart", requestHeroThree, { once: true, passive: true });
   }
 }
