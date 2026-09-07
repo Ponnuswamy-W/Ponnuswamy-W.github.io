@@ -123,16 +123,6 @@ function scheduleHeroThree() {
     interactiveSurface.addEventListener("focusin", requestHeroThree, { once: true });
     interactiveSurface.addEventListener("touchstart", requestHeroThree, { once: true, passive: true });
   }
-
-  const loadWhenIdle = () => {
-    window.setTimeout(requestHeroThree, 3200);
-  };
-
-  if (document.readyState === "complete") {
-    loadWhenIdle();
-  } else {
-    window.addEventListener("load", loadWhenIdle, { once: true });
-  }
 }
 
 function activatePdfEmbed(embed) {

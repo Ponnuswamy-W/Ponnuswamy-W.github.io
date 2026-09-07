@@ -1,4 +1,19 @@
-import * as THREE from "./assets/vendor/three.module.js";
+import {
+  AmbientLight,
+  CanvasTexture,
+  CylinderGeometry,
+  DirectionalLight,
+  Group,
+  MathUtils,
+  Mesh,
+  MeshStandardMaterial,
+  PerspectiveCamera,
+  PointLight,
+  Scene,
+  SRGBColorSpace,
+  TorusGeometry,
+  WebGLRenderer
+} from "./assets/vendor/three.module.js";
 
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -30,31 +45,31 @@ function initHeroScene(root) {
     return;
   }
 
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.outputColorSpace = SRGBColorSpace;
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
   renderer.domElement.setAttribute("aria-hidden", "true");
   renderer.domElement.style.transform = "translate3d(0px, 0px, 0)";
   renderer.domElement.style.willChange = "transform";
   root.appendChild(renderer.domElement);
 
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 40);
+  const scene = new Scene();
+  const camera = new PerspectiveCamera(34, 1, 0.1, 40);
   camera.position.set(0, 0, 7.4);
 
-  scene.add(new THREE.AmbientLight(0xf8f0df, 1.28));
+  scene.add(new AmbientLight(0xf8f0df, 1.28));
 
-  const keyLight = new THREE.DirectionalLight(0xfff8e8, 1.2);
+  const keyLight = new DirectionalLight(0xfff8e8, 1.2);
   keyLight.position.set(3.2, 4.4, 6.4);
   scene.add(keyLight);
 
-  const accentLight = new THREE.PointLight(0xc48e5d, 1.55, 16, 2);
+  const accentLight = new PointLight(0xc48e5d, 1.55, 16, 2);
   accentLight.position.set(-2.8, -0.8, 4.8);
   scene.add(accentLight);
 
-  const sceneGroup = new THREE.Group();
+  const sceneGroup = new Group();
   scene.add(sceneGroup);
 
-  const ringMaterial = new THREE.MeshStandardMaterial({
+  const ringMaterial = new MeshStandardMaterial({
     color: 0xdab46f,
     emissive: 0x5d3a22,
     emissiveIntensity: 0.08,
@@ -64,8 +79,8 @@ function initHeroScene(root) {
     opacity: 0.42
   });
 
-  const haloRing = new THREE.Mesh(
-    new THREE.TorusGeometry(2.7, 0.08, 16, 84),
+  const haloRing = new Mesh(
+    new TorusGeometry(2.7, 0.08, 16, 84),
     ringMaterial
   );
   haloRing.rotation.set(1.15, 0.18, 0.42);
@@ -105,8 +120,8 @@ function initHeroScene(root) {
       return;
     }
 
-    const normalizedX = THREE.MathUtils.clamp((event.clientX - rect.left) / rect.width - 0.5, -0.55, 0.55);
-    const normalizedY = THREE.MathUtils.clamp((event.clientY - rect.top) / rect.height - 0.5, -0.55, 0.55);
+    const normalizedX = MathUtils.clamp((event.clientX - rect.left) / rect.width - 0.5, -0.55, 0.55);
+    const normalizedY = MathUtils.clamp((event.clientY - rect.top) / rect.height - 0.5, -0.55, 0.55);
     pointerTargetX = normalizedY;
     pointerTargetY = normalizedX;
   };
@@ -217,7 +232,7 @@ function initHeroScene(root) {
 
 function createRenderer() {
   try {
-    return new THREE.WebGLRenderer({
+    return new WebGLRenderer({
       alpha: true,
       antialias: true,
       powerPreference: "low-power"
@@ -229,21 +244,21 @@ function createRenderer() {
 
 function createGlyphToken({ letter, position, rotation, bob, phase, spin, parallax }) {
   const texture = createGlyphTexture(letter);
-  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.colorSpace = SRGBColorSpace;
 
-  const geometry = new THREE.CylinderGeometry(0.68, 0.68, 0.18, 48);
-  const sideMaterial = new THREE.MeshStandardMaterial({
+  const geometry = new CylinderGeometry(0.68, 0.68, 0.18, 48);
+  const sideMaterial = new MeshStandardMaterial({
     color: 0xa86f42,
     roughness: 0.82,
     metalness: 0.16
   });
-  const faceMaterial = new THREE.MeshStandardMaterial({
+  const faceMaterial = new MeshStandardMaterial({
     map: texture,
     roughness: 0.7,
     metalness: 0.08
   });
 
-  const mesh = new THREE.Mesh(geometry, [sideMaterial, faceMaterial, faceMaterial.clone()]);
+  const mesh = new Mesh(geometry, [sideMaterial, faceMaterial, faceMaterial.clone()]);
   mesh.position.set(position[0], position[1], position[2]);
   mesh.rotation.set(rotation[0], rotation[1], rotation[2]);
   mesh.userData = {
@@ -268,7 +283,7 @@ function createGlyphTexture(letter) {
 
   const context = canvas.getContext("2d");
   if (!context) {
-    return new THREE.CanvasTexture(canvas);
+    return new CanvasTexture(canvas);
   }
 
   const gradient = context.createLinearGradient(0, 0, size, size);
@@ -289,7 +304,7 @@ function createGlyphTexture(letter) {
   context.font = '700 132px "Noto Serif Tamil", serif';
   context.fillText(letter, size / 2, size / 2 + 8);
 
-  const texture = new THREE.CanvasTexture(canvas);
+  const texture = new CanvasTexture(canvas);
   texture.needsUpdate = true;
   return texture;
 }
