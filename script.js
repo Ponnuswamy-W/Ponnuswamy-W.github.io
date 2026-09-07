@@ -94,6 +94,89 @@ const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)
 const magneticButtons = prefersReducedMotion
   ? []
   : Array.from(document.querySelectorAll("[data-magnetic]"));
+const lazyPdfEmbeds = Array.from(document.querySelectorAll("[data-lazy-pdf]"));
+const heroThreeShell = document.querySelector("[data-hero-three]");
+let hasRequestedHeroThree = false;
+
+function requestHeroThree() {
+  if (hasRequestedHeroThree || prefersReducedMotion || !heroThreeShell) {
+    return;
+  }
+
+  hasRequestedHeroThree = true;
+
+  const script = document.createElement("script");
+  script.src = "hero-three.bundle.js";
+  script.defer = true;
+  document.head.appendChild(script);
+}
+
+function scheduleHeroThree() {
+  if (prefersReducedMotion || !heroThreeShell) {
+    return;
+  }
+
+  const interactiveSurface = heroThreeShell.closest(".hero-visual");
+
+  if (interactiveSurface) {
+    interactiveSurface.addEventListener("pointerenter", requestHeroThree, { once: true });
+    interactiveSurface.addEventListener("focusin", requestHeroThree, { once: true });
+    interactiveSurface.addEventListener("touchstart", requestHeroThree, { once: true, passive: true });
+  }
+
+  const loadWhenIdle = () => {
+    window.setTimeout(requestHeroThree, 3200);
+  };
+
+  if (document.readyState === "complete") {
+    loadWhenIdle();
+  } else {
+    window.addEventListener("load", loadWhenIdle, { once: true });
+  }
+}
+
+function activatePdfEmbed(embed) {
+  if (!embed || embed.dataset.loaded === "true") {
+    return;
+  }
+
+  const source = embed.dataset.src;
+  if (!source) {
+    return;
+  }
+
+  const shell = embed.closest(".pdf-embed-shell");
+  embed.dataset.loaded = "true";
+  embed.data = source;
+  shell?.classList.add("is-loaded");
+}
+
+function scheduleLazyPdfEmbeds() {
+  if (lazyPdfEmbeds.length === 0) {
+    return;
+  }
+
+  if (!("IntersectionObserver" in window)) {
+    lazyPdfEmbeds.forEach((embed) => activatePdfEmbed(embed));
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          activatePdfEmbed(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    {
+      rootMargin: "320px 0px"
+    }
+  );
+
+  lazyPdfEmbeds.forEach((embed) => observer.observe(embed));
+}
 
 magneticButtons.forEach((button) => {
   const resetButtonPosition = () => {
@@ -116,6 +199,9 @@ magneticButtons.forEach((button) => {
 
   button.addEventListener("blur", resetButtonPosition);
 });
+
+scheduleHeroThree();
+scheduleLazyPdfEmbeds();
 
 if (prefersReducedMotion || !("IntersectionObserver" in window)) {
   revealItems.forEach((item) => item.classList.add("is-visible"));

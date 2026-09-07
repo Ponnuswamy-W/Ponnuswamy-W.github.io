@@ -9,10 +9,10 @@
   "description": "சிறார் மனங்களுக்கு நீதியின் வாசல் திறக்கும் தமிழ் வெளியீடு.",
   "icons": [
     {
-      "src": "assets/generated/favicon.png",
-      "sizes": "256x256",
+      "src": "assets/generated/favicon-192.png",
+      "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }

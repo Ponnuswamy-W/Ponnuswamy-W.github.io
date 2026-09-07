@@ -16,9 +16,12 @@
   <link rel="alternate" hreflang="x-default" href="https://posumiveliyeedu.com/" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@400;500;600;700&family=Noto+Serif+Tamil:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png" sizes="256x256" href="assets/generated/favicon.png">
-  <link rel="apple-touch-icon" href="assets/generated/favicon.png">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@400;600;700&family=Noto+Serif+Tamil:wght@600;700&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@400;600;700&family=Noto+Serif+Tamil:wght@600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@400;600;700&family=Noto+Serif+Tamil:wght@600;700&display=swap" rel="stylesheet"></noscript>
+  <link rel="preload" as="image" href="assets/generated/featured-book-640.jpg" imagesrcset="assets/generated/featured-book-480.jpg 480w, assets/generated/featured-book-640.jpg 640w, assets/generated/featured-book.jpg 900w" imagesizes="(max-width: 760px) 88vw, (max-width: 1200px) 42vw, 900px">
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/generated/favicon-64.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/generated/favicon-180.png">
   <link rel="manifest" href="manifest.webmanifest">
   <meta property="og:locale" content="ta_IN">
   <meta property="og:type" content="website">
@@ -115,7 +118,6 @@
   </script>
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
-  <script src="hero-three.bundle.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">உள்ளடக்கத்திற்குச் செல்ல</a>
@@ -222,7 +224,7 @@
           <div class="hero-visual reveal">
             <div class="hero-three-shell" data-hero-three aria-hidden="true"></div>
             <figure class="cover-frame">
-              <img src="assets/generated/featured-book.jpg" alt="ஆத்திசூடி வள்ளுவம் வாய் விளக்கம் உயிர் வருக்கம் அட்டைப்படம்" width="900" height="637" fetchpriority="high">
+              <img src="assets/generated/featured-book-640.jpg" srcset="assets/generated/featured-book-480.jpg 480w, assets/generated/featured-book-640.jpg 640w, assets/generated/featured-book.jpg 900w" sizes="(max-width: 760px) 88vw, (max-width: 1200px) 42vw, 900px" alt="ஆத்திசூடி வள்ளுவம் வாய் விளக்கம் உயிர் வருக்கம் அட்டைப்படம்" width="900" height="637" fetchpriority="high" decoding="async">
             </figure>
             <aside class="hero-meta ornament-card">
               <p class="mini-label">தற்போதைய வெளியீடு</p>
@@ -313,7 +315,7 @@
           <div class="featured-grid">
             <article class="book-showcase reveal">
               <div class="book-image-shell">
-                <img src="assets/generated/featured-book.jpg" alt="ஆத்திசூடி உயிர் வருக்கம் அட்டைப்படம்" width="900" height="637" loading="eager">
+                <img src="assets/generated/featured-book-640.jpg" srcset="assets/generated/featured-book-480.jpg 480w, assets/generated/featured-book-640.jpg 640w, assets/generated/featured-book.jpg 900w" sizes="(max-width: 1024px) 92vw, 44vw" alt="ஆத்திசூடி உயிர் வருக்கம் அட்டைப்படம்" width="900" height="637" loading="lazy" decoding="async">
               </div>
               <p class="caption">குழந்தைகளுக்கான எளிய வாசிப்பு, நினைவில் நிற்கும் காட்சியமைப்பு, தமிழின் நன்னெறி வழிகாட்டுதல்.</p>
             </article>
@@ -408,7 +410,8 @@
                 </div>
               </div>
               <div class="pdf-embed-shell">
-                <object data="Book/Aathichudi_Intro.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH" type="application/pdf" aria-label="ஆத்திசூடி முன்னோட்ட PDF inline viewer">
+                <div class="pdf-loading-note" data-pdf-placeholder>இந்த பகுதியை அணையும் போது PDF முன்னோட்டம் தானாக ஏற்றப்படும்.</div>
+                <object data-src="Book/Aathichudi_Intro.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH" type="application/pdf" aria-label="ஆத்திசூடி முன்னோட்ட PDF inline viewer" data-lazy-pdf>
                   <p>இந்த உலாவியில் inline PDF திறக்கப்படவில்லை. <a href="Book/Aathichudi_Intro.pdf" target="_blank" rel="noopener">புதிய சாளரத்தில் PDF-ஐ திறக்கவும்</a>.</p>
                 </object>
               </div>
@@ -428,7 +431,7 @@
           <div class="series-grid">
             <article class="series-card reveal">
               <span class="series-status current">இப்போது</span>
-              <img src="assets/generated/series-0.jpg" alt="ஆத்திசூடி உயிர் வருக்கம் அட்டைப்படம்" width="640" height="453" decoding="async">
+              <img src="assets/generated/series-0-320.jpg" srcset="assets/generated/series-0-320.jpg 320w, assets/generated/series-0.jpg 640w" sizes="(max-width: 760px) 92vw, (max-width: 1024px) 46vw, 31vw" alt="ஆத்திசூடி உயிர் வருக்கம் அட்டைப்படம்" width="640" height="453" loading="lazy" decoding="async">
               <div class="series-body">
                 <h3>உயிர் வருக்கம்</h3>
                 <p>இப்போது கிடைக்கும் முதல் நூல்</p>
@@ -436,7 +439,7 @@
             </article>
             <article class="series-card reveal">
               <span class="series-status">வரும் வெளியீடு</span>
-              <img src="assets/generated/series-1.jpg" alt="ஆத்திசூடி மெய் வருக்கம் அட்டைப்படம்" width="640" height="453" decoding="async">
+              <img src="assets/generated/series-1-320.jpg" srcset="assets/generated/series-1-320.jpg 320w, assets/generated/series-1.jpg 640w" sizes="(max-width: 760px) 92vw, (max-width: 1024px) 46vw, 31vw" alt="ஆத்திசூடி மெய் வருக்கம் அட்டைப்படம்" width="640" height="453" loading="lazy" decoding="async">
               <div class="series-body">
                 <h3>மெய் வருக்கம்</h3>
                 <p>விரைவில் வெளியாகும் அடுத்த நூல்</p>
@@ -444,7 +447,7 @@
             </article>
             <article class="series-card reveal">
               <span class="series-status">வரும் வெளியீடு</span>
-              <img src="assets/generated/series-2.jpg" alt="ஆத்திசூடி ககர வருக்கம் அட்டைப்படம்" width="640" height="453" decoding="async">
+              <img src="assets/generated/series-2-320.jpg" srcset="assets/generated/series-2-320.jpg 320w, assets/generated/series-2.jpg 640w" sizes="(max-width: 760px) 92vw, (max-width: 1024px) 46vw, 31vw" alt="ஆத்திசூடி ககர வருக்கம் அட்டைப்படம்" width="640" height="453" loading="lazy" decoding="async">
               <div class="series-body">
                 <h3>ககர வருக்கம்</h3>
                 <p>தமிழெழுத்து பயணத்தின் விரிவாக்கம்</p>
@@ -452,7 +455,7 @@
             </article>
             <article class="series-card reveal">
               <span class="series-status">வரும் வெளியீடு</span>
-              <img src="assets/generated/series-3.jpg" alt="ஆத்திசூடி சகர வருக்கம் அட்டைப்படம்" width="640" height="453" decoding="async">
+              <img src="assets/generated/series-3-320.jpg" srcset="assets/generated/series-3-320.jpg 320w, assets/generated/series-3.jpg 640w" sizes="(max-width: 760px) 92vw, (max-width: 1024px) 46vw, 31vw" alt="ஆத்திசூடி சகர வருக்கம் அட்டைப்படம்" width="640" height="453" loading="lazy" decoding="async">
               <div class="series-body">
                 <h3>சகர வருக்கம்</h3>
                 <p>கடல்சூழ் கற்பனை உலகத் தொடர் வடிவம்</p>
@@ -460,7 +463,7 @@
             </article>
             <article class="series-card reveal">
               <span class="series-status">வரும் வெளியீடு</span>
-              <img src="assets/generated/series-4.jpg" alt="ஆத்திசூடி தகர வருக்கம் அட்டைப்படம்" width="640" height="453" decoding="async">
+              <img src="assets/generated/series-4-320.jpg" srcset="assets/generated/series-4-320.jpg 320w, assets/generated/series-4.jpg 640w" sizes="(max-width: 760px) 92vw, (max-width: 1024px) 46vw, 31vw" alt="ஆத்திசூடி தகர வருக்கம் அட்டைப்படம்" width="640" height="453" loading="lazy" decoding="async">
               <div class="series-body">
                 <h3>தகர வருக்கம்</h3>
                 <p>இயற்கையும் எழுத்தும் இணையும் காட்சி மொழி</p>
@@ -468,7 +471,7 @@
             </article>
             <article class="series-card reveal">
               <span class="series-status">வரும் வெளியீடு</span>
-              <img src="assets/generated/series-5.jpg" alt="ஆத்திசூடி நகர வருக்கம் அட்டைப்படம்" width="640" height="453" decoding="async">
+              <img src="assets/generated/series-5-320.jpg" srcset="assets/generated/series-5-320.jpg 320w, assets/generated/series-5.jpg 640w" sizes="(max-width: 760px) 92vw, (max-width: 1024px) 46vw, 31vw" alt="ஆத்திசூடி நகர வருக்கம் அட்டைப்படம்" width="640" height="453" loading="lazy" decoding="async">
               <div class="series-body">
                 <h3>நகர வருக்கம்</h3>
                 <p>சந்தை வாழ்வோடு மொழி நினைவூட்டும் வடிவம்</p>
@@ -476,7 +479,7 @@
             </article>
             <article class="series-card reveal">
               <span class="series-status">வரும் வெளியீடு</span>
-              <img src="assets/generated/series-6.jpg" alt="ஆத்திசூடி பகர வருக்கம் அட்டைப்படம்" width="640" height="453" decoding="async">
+              <img src="assets/generated/series-6-320.jpg" srcset="assets/generated/series-6-320.jpg 320w, assets/generated/series-6.jpg 640w" sizes="(max-width: 760px) 92vw, (max-width: 1024px) 46vw, 31vw" alt="ஆத்திசூடி பகர வருக்கம் அட்டைப்படம்" width="640" height="453" loading="lazy" decoding="async">
               <div class="series-body">
                 <h3>பகர வருக்கம்</h3>
                 <p>நடன ஆற்றலுடன் வடிவெடுக்கும் தொடர்காட்சி</p>
@@ -484,7 +487,7 @@
             </article>
             <article class="series-card reveal">
               <span class="series-status">வரும் வெளியீடு</span>
-              <img src="assets/generated/series-7.jpg" alt="ஆத்திசூடி மகர வருக்கம் அட்டைப்படம்" width="640" height="453" decoding="async">
+              <img src="assets/generated/series-7-320.jpg" srcset="assets/generated/series-7-320.jpg 320w, assets/generated/series-7.jpg 640w" sizes="(max-width: 760px) 92vw, (max-width: 1024px) 46vw, 31vw" alt="ஆத்திசூடி மகர வருக்கம் அட்டைப்படம்" width="640" height="453" loading="lazy" decoding="async">
               <div class="series-body">
                 <h3>மகர வருக்கம்</h3>
                 <p>பரந்த காட்சியியல் பின்புலத்தில் எழுத்துப் பயணம்</p>
@@ -492,7 +495,7 @@
             </article>
             <article class="series-card reveal">
               <span class="series-status">வரும் வெளியீடு</span>
-              <img src="assets/generated/series-8.jpg" alt="ஆத்திசூடி வகர வருக்கம் அட்டைப்படம்" width="640" height="453" decoding="async">
+              <img src="assets/generated/series-8-320.jpg" srcset="assets/generated/series-8-320.jpg 320w, assets/generated/series-8.jpg 640w" sizes="(max-width: 760px) 92vw, (max-width: 1024px) 46vw, 31vw" alt="ஆத்திசூடி வகர வருக்கம் அட்டைப்படம்" width="640" height="453" loading="lazy" decoding="async">
               <div class="series-body">
                 <h3>வகர வருக்கம்</h3>
                 <p>பண்டிகைநயத்துடன் நிறைவூட்டும் தலைப்பு உலகம்</p>

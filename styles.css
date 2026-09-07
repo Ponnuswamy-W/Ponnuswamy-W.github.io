@@ -986,6 +986,24 @@ address {
   border: 1px solid rgba(117, 72, 34, 0.12);
 }
 
+.pdf-loading-note {
+  display: grid;
+  place-items: center;
+  min-height: clamp(10rem, 22vh, 13rem);
+  padding: 1rem 1.25rem;
+  border-radius: 1rem;
+  background:
+    linear-gradient(120deg, rgba(255, 250, 242, 0.95), rgba(241, 230, 206, 0.9), rgba(255, 250, 242, 0.95));
+  background-size: 220% 100%;
+  color: rgba(48, 24, 14, 0.8);
+  text-align: center;
+  animation: shimmer-inline 2.8s linear infinite;
+}
+
+.pdf-embed-shell.is-loaded .pdf-loading-note {
+  display: none;
+}
+
 .pdf-embed-shell object {
   display: block;
   width: 100%;
@@ -993,6 +1011,10 @@ address {
   border: 0;
   border-radius: 1rem;
   background: #fff;
+}
+
+.pdf-embed-shell:not(.is-loaded) object {
+  display: none;
 }
 
 .pdf-embed-shell p {
@@ -1247,6 +1269,16 @@ address {
   50% {
     background-position: 100% 50%;
     box-shadow: 0 28px 60px rgba(122, 66, 29, 0.28);
+  }
+}
+
+@keyframes shimmer-inline {
+  0% {
+    background-position: 200% 50%;
+  }
+
+  100% {
+    background-position: -20% 50%;
   }
 }
 
