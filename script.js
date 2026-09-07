@@ -96,6 +96,7 @@ const magneticButtons = prefersReducedMotion
   : Array.from(document.querySelectorAll("[data-magnetic]"));
 const lazyPdfEmbeds = Array.from(document.querySelectorAll("[data-lazy-pdf]"));
 const heroThreeShell = document.querySelector("[data-hero-three]");
+const assetVersion = "20260907c";
 let hasRequestedHeroThree = false;
 
 function requestHeroThree() {
@@ -106,7 +107,7 @@ function requestHeroThree() {
   hasRequestedHeroThree = true;
 
   const script = document.createElement("script");
-  script.src = "hero-three.bundle.js";
+  script.src = `hero-three.bundle.js?v=${assetVersion}`;
   script.defer = true;
   document.head.appendChild(script);
 }
