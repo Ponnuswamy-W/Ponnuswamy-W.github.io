@@ -1069,6 +1069,31 @@ address {
   filter: saturate(1.05);
 }
 
+html[lang="ta"] .hero-copy h1 {
+  max-width: 14ch;
+  font-size: clamp(2.2rem, 4.2vw, 4.15rem);
+  line-height: 1.08;
+  letter-spacing: -0.01em;
+}
+
+html[lang="ta"] .lead {
+  max-width: 38rem;
+  font-size: 1.03rem;
+  line-height: 1.75;
+}
+
+html[lang="ta"] .section-heading h2 {
+  max-width: 18ch;
+  font-size: clamp(1.9rem, 3.2vw, 2.9rem);
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+html[lang="ta"] .hero-meta h2,
+html[lang="ta"] .preview-poster-body h3 {
+  font-size: 1.55rem;
+}
+
 html[lang="en"] .hero-copy h1,
 html[lang="en"] .hero-meta h2,
 html[lang="en"] .ornament-card h3,
@@ -1361,6 +1386,19 @@ address {
     animation: none;
   }
 
+  .hero-visual {
+    display: grid;
+    justify-items: center;
+    gap: 1rem;
+  }
+
+  .cover-frame,
+  .hero-meta {
+    width: min(100%, 28rem);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .hero-three-shell {
     inset: -1rem -1rem -1.5rem -1rem;
   }
@@ -1382,10 +1420,27 @@ address {
 @media (max-width: 760px) {
   .topbar-row {
     position: relative;
+    align-items: center;
+    gap: 0.75rem;
   }
 
   .topbar-links {
     gap: 0.55rem;
+  }
+
+  .brand {
+    max-width: calc(100% - 12rem);
+  }
+
+  .brand-mark {
+    width: 2.75rem;
+    height: 2.75rem;
+    font-size: 1.15rem;
+  }
+
+  .brand-text strong {
+    font-size: 0.95rem;
+    line-height: 1.08;
   }
 
   .nav-toggle {
@@ -1430,7 +1485,7 @@ address {
   }
 
   .hero {
-    padding-top: 2rem;
+    padding-top: 1.8rem;
   }
 
   .hero-copy h1 {
@@ -1438,9 +1493,27 @@ address {
     font-size: clamp(2.15rem, 9vw, 3.6rem);
   }
 
+  html[lang="ta"] .hero-copy h1 {
+    font-size: clamp(1.95rem, 7.3vw, 3rem);
+    line-height: 1.1;
+  }
+
   html[lang="en"] .hero-copy h1 {
     font-size: clamp(1.95rem, 7vw, 2.85rem);
     max-width: 100%;
+  }
+
+  .lead,
+  html[lang="ta"] .lead,
+  html[lang="en"] .lead {
+    max-width: 100%;
+    font-size: 0.98rem;
+    line-height: 1.72;
+  }
+
+  html[lang="ta"] .section-heading h2 {
+    max-width: 100%;
+    font-size: clamp(1.72rem, 6.3vw, 2.4rem);
   }
 
   html[lang="en"] .section-heading h2 {
@@ -1448,13 +1521,91 @@ address {
     font-size: clamp(1.8rem, 6vw, 2.35rem);
   }
 
-  .stats-strip,
-  .series-grid {
+  .section-heading > p:last-child,
+  html[lang="ta"] .section-heading > p:last-child,
+  html[lang="en"] .section-heading > p:last-child {
+    max-width: 100%;
+  }
+
+  .hero-grid {
+    gap: 1.35rem;
+  }
+
+  html[lang="en"] .hero-grid {
     grid-template-columns: 1fr;
+    gap: 1.35rem;
+  }
+
+  .hero-copy {
+    max-width: 100%;
+  }
+
+  .hero-visual {
+    gap: 0.9rem;
+  }
+
+  .cover-frame,
+  .hero-meta {
+    width: 100%;
+    max-width: 22rem;
+  }
+
+  .hero-meta h2,
+  .preview-poster-body h3 {
+    font-size: 1.42rem;
+  }
+
+  .hero-note {
+    margin-top: 1.25rem;
+    padding: 0.9rem 1rem;
+  }
+
+  .hero-actions,
+  .action-row,
+  .contact-actions {
+    gap: 0.7rem;
+  }
+
+  .hero-actions .button,
+  .action-row .button,
+  .contact-actions .button {
+    width: 100%;
+  }
+
+  .hero-actions .button,
+  .action-row .button {
+    min-height: 3.35rem;
+  }
+
+  .stats-strip {
+    gap: 0.85rem;
+    margin-top: 1.6rem;
+  }
+
+  .stat-card {
+    padding: 1rem 1rem 1.05rem;
   }
 
   .section {
-    padding: 4.25rem 0;
+    padding: 3.75rem 0;
+  }
+
+  .preview-copy,
+  .preview-frame,
+  .ornament-card,
+  .details-card,
+  .contact-card {
+    padding-left: 1.15rem;
+    padding-right: 1.15rem;
+  }
+
+  .pdf-embed-shell object {
+    height: min(62vh, 34rem);
+  }
+
+  .stats-strip,
+  .series-grid {
+    grid-template-columns: 1fr;
   }
 
   .footer-row {
