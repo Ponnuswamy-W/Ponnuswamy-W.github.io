@@ -96,7 +96,7 @@ const magneticButtons = prefersReducedMotion
   : Array.from(document.querySelectorAll("[data-magnetic]"));
 const pdfPreviewShells = Array.from(document.querySelectorAll(".pdf-embed-shell"));
 const heroThreeShell = document.querySelector("[data-hero-three]");
-const assetVersion = "20260907g";
+const assetVersion = "20260908a";
 let hasRequestedHeroThree = false;
 let pdfLibraryPromise;
 

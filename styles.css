@@ -1863,17 +1863,17 @@ address {
   }
 
   .pdf-inline-viewer {
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(84%, 1fr);
-    overflow-x: auto;
+    grid-template-columns: 1fr;
+    overflow: visible;
     gap: 0.75rem;
-    padding-bottom: 0.25rem;
-    scroll-snap-type: x mandatory;
-    overscroll-behavior-x: contain;
+    padding-bottom: 0;
+    scroll-snap-type: none;
+    overscroll-behavior-x: auto;
   }
 
   .pdf-page {
-    scroll-snap-align: start;
+    max-width: none;
+    scroll-snap-align: none;
   }
 
   .stats-strip,
