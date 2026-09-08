@@ -21,7 +21,7 @@
   <noscript><link href="https://fonts.googleapis.com/css2?family=Hind+Madurai:wght@400;600;700&family=Noto+Serif+Tamil:wght@600;700&display=swap" rel="stylesheet"></noscript>
   <link rel="icon" type="image/png" sizes="64x64" href="assets/generated/favicon-64.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/generated/favicon-180.png">
-  <link rel="manifest" href="manifest.webmanifest?v=20260907c">
+  <link rel="manifest" href="manifest.webmanifest?v=20260907g">
   <meta property="og:locale" content="ta_IN">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="பொசுமி வெளியீடு">
@@ -115,8 +115,8 @@
       ]
     }
   </script>
-  <link rel="stylesheet" href="styles.css?v=20260907c">
-  <script src="script.js?v=20260907c" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20260907g">
+  <script src="script.js?v=20260907g" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">உள்ளடக்கத்திற்குச் செல்ல</a>
@@ -208,7 +208,7 @@
         <div class="container hero-grid">
           <div class="hero-copy reveal">
             <p class="eyebrow">பொசுமி வெளியீடு</p>
-            <h1>சிறார் மனங்களுக்கு நீதியின் வாசல் திறக்கும் தமிழ் வெளியீடு</h1>
+            <h1><span>சிறார் மனங்களுக்கு</span><span>நீதியின் வாசல் திறக்கும்</span><span>தமிழ் வெளியீடு</span></h1>
             <p class="lead">பழமை நூல்களில் ஆழ்ந்து கிடக்கும் நீதிச் சிந்தனையையும் சமூகப் பார்வையையும், இன்றைய குழந்தைகள் அன்போடு அணுகும் வகையில் எளிமையாக்கி வழங்கும் முயற்சி இது.</p>
             <div class="hero-actions">
               <a class="button button-primary button-book" href="#featured"><svg class="ui-icon" aria-hidden="true"><use href="#icon-book-open"></use></svg><span>முதல் நூலை பார்க்க</span></a>
@@ -409,10 +409,9 @@
                 </div>
               </div>
               <div class="pdf-embed-shell">
-                <div class="pdf-loading-note" data-pdf-placeholder>இந்த பகுதியை அணையும் போது PDF முன்னோட்டம் தானாக ஏற்றப்படும்.</div>
-                <object data-src="Book/Aathichudi_Intro.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH" type="application/pdf" aria-label="ஆத்திசூடி முன்னோட்ட PDF inline viewer" data-lazy-pdf>
-                  <p>இந்த உலாவியில் inline PDF திறக்கப்படவில்லை. <a href="Book/Aathichudi_Intro.pdf" target="_blank" rel="noopener">புதிய சாளரத்தில் PDF-ஐ திறக்கவும்</a>.</p>
-                </object>
+                <div class="pdf-loading-note" data-pdf-placeholder>முன்னோட்டம் ஏற்றப்படுகிறது...</div>
+                <div class="pdf-inline-viewer" data-pdf-viewer data-pdf-src="Book/Aathichudi_Intro.pdf" data-loading-label="முன்னோட்டம் ஏற்றப்படுகிறது..." data-error-label="இந்த சாதனத்தில் inline முன்னோட்டம் கிடைக்கவில்லை. மேலுள்ள பொத்தானைப் பயன்படுத்தி PDF-ஐ திறக்கவும்." data-page-label="முன்னோட்டப் பக்கம்" aria-label="ஆத்திசூடி முன்னோட்ட PDF inline viewer"></div>
+                <p class="pdf-fallback-note" data-pdf-fallback hidden>இந்த சாதனத்தில் inline முன்னோட்டம் கிடைக்கவில்லை. மேலுள்ள பொத்தானைப் பயன்படுத்தி PDF-ஐ திறக்கலாம் அல்லது பதிவிறக்கலாம்.</p>
               </div>
             </article>
           </div>

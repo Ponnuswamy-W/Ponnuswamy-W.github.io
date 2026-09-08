@@ -94,10 +94,11 @@ const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)
 const magneticButtons = prefersReducedMotion
   ? []
   : Array.from(document.querySelectorAll("[data-magnetic]"));
-const lazyPdfEmbeds = Array.from(document.querySelectorAll("[data-lazy-pdf]"));
+const pdfPreviewShells = Array.from(document.querySelectorAll(".pdf-embed-shell"));
 const heroThreeShell = document.querySelector("[data-hero-three]");
-const assetVersion = "20260907c";
+const assetVersion = "20260907g";
 let hasRequestedHeroThree = false;
+let pdfLibraryPromise;
 
 function requestHeroThree() {
   if (hasRequestedHeroThree || prefersReducedMotion || !heroThreeShell) {
@@ -126,29 +127,147 @@ function scheduleHeroThree() {
   }
 }
 
-function activatePdfEmbed(embed) {
-  if (!embed || embed.dataset.loaded === "true") {
+function loadPdfLibrary() {
+  if (window.pdfjsLib) {
+    return Promise.resolve(window.pdfjsLib);
+  }
+
+  if (pdfLibraryPromise) {
+    return pdfLibraryPromise;
+  }
+
+  pdfLibraryPromise = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = `assets/vendor/pdf.min.js?v=${assetVersion}`;
+    script.async = true;
+    script.onload = () => {
+      if (!window.pdfjsLib) {
+        reject(new Error("PDF.js unavailable"));
+        return;
+      }
+
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = `assets/vendor/pdf.worker.min.js?v=${assetVersion}`;
+      resolve(window.pdfjsLib);
+    };
+    script.onerror = () => reject(new Error("PDF.js failed to load"));
+    document.head.appendChild(script);
+  });
+
+  return pdfLibraryPromise;
+}
+
+async function renderPdfPage(page, canvas, wrapper) {
+  const baseViewport = page.getViewport({ scale: 1 });
+  await new Promise((resolve) => window.requestAnimationFrame(resolve));
+
+  const maxPreviewWidth = window.innerWidth <= 760 ? Math.min(Math.round(window.innerWidth * 0.82), 300) : 320;
+  const availableWidth = Math.min(Math.max(wrapper.clientWidth || 0, canvas.parentElement?.clientWidth || 0, 220), maxPreviewWidth);
+  const fitScale = availableWidth / baseViewport.width;
+  const outputScale = Math.min(window.devicePixelRatio || 1, 2);
+  const viewport = page.getViewport({ scale: fitScale * outputScale });
+  const context = canvas.getContext("2d", { alpha: false });
+
+  if (!context) {
+    throw new Error("Canvas unavailable");
+  }
+
+  canvas.width = Math.round(viewport.width);
+  canvas.height = Math.round(viewport.height);
+  canvas.style.width = `${Math.round(baseViewport.width * fitScale)}px`;
+  canvas.style.height = `${Math.round(baseViewport.height * fitScale)}px`;
+
+  await page.render({
+    canvasContext: context,
+    viewport
+  }).promise;
+}
+
+async function activatePdfPreview(root) {
+  if (!root) {
     return;
   }
 
-  const source = embed.dataset.src;
+  const shell = root;
+  const viewer = shell.querySelector("[data-pdf-viewer]");
+  const placeholder = shell.querySelector("[data-pdf-placeholder]");
+  const fallback = shell.querySelector("[data-pdf-fallback]");
+
+  if (!viewer || viewer.dataset.loaded === "true" || viewer.dataset.loading === "true") {
+    return;
+  }
+
+  const source = viewer.dataset.pdfSrc;
   if (!source) {
     return;
   }
 
-  const shell = embed.closest(".pdf-embed-shell");
-  embed.dataset.loaded = "true";
-  embed.data = source;
-  shell?.classList.add("is-loaded");
+  viewer.dataset.loading = "true";
+
+  if (placeholder && viewer.dataset.loadingLabel) {
+    placeholder.textContent = viewer.dataset.loadingLabel;
+  }
+
+  try {
+    const pdfjsLib = await loadPdfLibrary();
+    const pdf = await pdfjsLib.getDocument({ url: source }).promise;
+    const totalPages = Math.min(pdf.numPages, 4);
+    const pages = await Promise.all(
+      Array.from({ length: totalPages }, (_, index) => pdf.getPage(index + 1))
+    );
+
+    viewer.textContent = "";
+    const renderJobs = [];
+
+    pages.forEach((page, index) => {
+      const pageNumber = index + 1;
+      const figure = document.createElement("figure");
+      figure.className = "pdf-page";
+
+      const canvas = document.createElement("canvas");
+      canvas.setAttribute("aria-label", `${viewer.dataset.pageLabel || "Preview page"} ${pageNumber}`);
+      figure.appendChild(canvas);
+      viewer.appendChild(figure);
+
+      renderJobs.push(
+        renderPdfPage(page, canvas, figure).then(() => {
+          if (!shell?.classList.contains("is-loaded")) {
+            shell?.classList.remove("is-error");
+            shell?.classList.add("is-loaded");
+          }
+        })
+      );
+    });
+
+    await Promise.all(renderJobs);
+
+    viewer.dataset.loaded = "true";
+    viewer.dataset.loading = "false";
+    shell?.classList.remove("is-error");
+
+    if (fallback) {
+      fallback.hidden = true;
+    }
+  } catch (error) {
+    viewer.dataset.loading = "false";
+    shell?.classList.add("is-error");
+
+    if (placeholder && viewer.dataset.errorLabel) {
+      placeholder.textContent = viewer.dataset.errorLabel;
+    }
+
+    if (fallback) {
+      fallback.hidden = false;
+    }
+  }
 }
 
-function scheduleLazyPdfEmbeds() {
-  if (lazyPdfEmbeds.length === 0) {
+function scheduleLazyPdfPreviews() {
+  if (pdfPreviewShells.length === 0) {
     return;
   }
 
   if (!("IntersectionObserver" in window)) {
-    lazyPdfEmbeds.forEach((embed) => activatePdfEmbed(embed));
+    pdfPreviewShells.forEach((shell) => activatePdfPreview(shell));
     return;
   }
 
@@ -156,17 +275,29 @@ function scheduleLazyPdfEmbeds() {
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          activatePdfEmbed(entry.target);
+          activatePdfPreview(entry.target);
           observer.unobserve(entry.target);
         }
       });
     },
     {
-      rootMargin: "320px 0px"
+      rootMargin: "220px 0px"
     }
   );
 
-  lazyPdfEmbeds.forEach((embed) => observer.observe(embed));
+  pdfPreviewShells.forEach((shell) => observer.observe(shell));
+
+  const triggerFallbackLoad = () => {
+    window.setTimeout(() => {
+      pdfPreviewShells.forEach((shell) => activatePdfPreview(shell));
+    }, 1200);
+  };
+
+  if (document.readyState === "complete") {
+    triggerFallbackLoad();
+  } else {
+    window.addEventListener("load", triggerFallbackLoad, { once: true });
+  }
 }
 
 magneticButtons.forEach((button) => {
@@ -192,7 +323,7 @@ magneticButtons.forEach((button) => {
 });
 
 scheduleHeroThree();
-scheduleLazyPdfEmbeds();
+scheduleLazyPdfPreviews();
 
 if (prefersReducedMotion || !("IntersectionObserver" in window)) {
   revealItems.forEach((item) => item.classList.add("is-visible"));

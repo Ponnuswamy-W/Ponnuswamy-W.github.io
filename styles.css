@@ -986,6 +986,28 @@ address {
   border: 1px solid rgba(117, 72, 34, 0.12);
 }
 
+.pdf-inline-viewer {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.pdf-page {
+  margin: 0;
+  overflow: hidden;
+  width: 100%;
+  border-radius: 1rem;
+  background: #fff;
+  border: 1px solid rgba(117, 72, 34, 0.12);
+  box-shadow: 0 14px 32px rgba(77, 43, 20, 0.08);
+}
+
+.pdf-page canvas {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+  background: #fff;
+}
+
 .pdf-loading-note {
   display: grid;
   place-items: center;
@@ -1004,17 +1026,18 @@ address {
   display: none;
 }
 
-.pdf-embed-shell object {
-  display: block;
-  width: 100%;
-  height: clamp(28rem, 68vh, 52rem);
-  border: 0;
+.pdf-fallback-note {
+  margin: 0.9rem 0 0;
+  padding: 0.95rem 1rem;
   border-radius: 1rem;
-  background: #fff;
+  background: rgba(255, 248, 236, 0.88);
+  border: 1px solid rgba(117, 72, 34, 0.12);
+  color: rgba(48, 24, 14, 0.8);
 }
 
-.pdf-embed-shell:not(.is-loaded) object {
-  display: none;
+.pdf-embed-shell.is-error .pdf-loading-note {
+  animation: none;
+  background: rgba(255, 248, 236, 0.88);
 }
 
 .pdf-embed-shell p {
@@ -1070,10 +1093,19 @@ address {
 }
 
 html[lang="ta"] .hero-copy h1 {
-  max-width: 14ch;
-  font-size: clamp(2.2rem, 4.2vw, 4.15rem);
-  line-height: 1.08;
+  max-width: 23ch;
+  font-size: clamp(1.78rem, 2.75vw, 3rem);
+  line-height: 1.07;
   letter-spacing: -0.01em;
+  text-wrap: wrap;
+}
+
+html[lang="ta"] .hero-copy h1 span {
+  display: block;
+}
+
+html[lang="ta"] .hero-copy h1 span + span {
+  margin-top: 0.02em;
 }
 
 html[lang="ta"] .lead {
@@ -1505,9 +1537,11 @@ address {
   }
 
   html[lang="ta"] .hero-copy h1 {
-    max-width: 13ch;
-    font-size: clamp(1.68rem, 6.15vw, 2.55rem);
+    max-width: 100%;
+    font-size: clamp(1.62rem, 5.7vw, 2.35rem);
     line-height: 1.08;
+    letter-spacing: -0.012em;
+    text-wrap: pretty;
   }
 
   html[lang="en"] .hero-copy h1 {
@@ -1825,7 +1859,21 @@ address {
   }
 
   .pdf-embed-shell object {
-    height: min(52vh, 30rem);
+    height: auto;
+  }
+
+  .pdf-inline-viewer {
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(84%, 1fr);
+    overflow-x: auto;
+    gap: 0.75rem;
+    padding-bottom: 0.25rem;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+  }
+
+  .pdf-page {
+    scroll-snap-align: start;
   }
 
   .stats-strip,
@@ -1836,6 +1884,19 @@ address {
   .footer-row {
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+
+@media (min-width: 761px) {
+  .pdf-inline-viewer {
+    grid-template-columns: repeat(2, minmax(0, 18rem));
+    justify-content: center;
+    align-items: start;
+  }
+
+  .pdf-page {
+    max-width: 18rem;
+    justify-self: center;
   }
 }
 
