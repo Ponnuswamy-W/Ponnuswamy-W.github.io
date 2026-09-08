@@ -230,6 +230,10 @@ async function activatePdfPreview(root) {
 
       renderJobs.push(
         renderPdfPage(page, canvas, figure).then(() => {
+          if (placeholder) {
+            placeholder.hidden = true;
+          }
+
           if (!shell?.classList.contains("is-loaded")) {
             shell?.classList.remove("is-error");
             shell?.classList.add("is-loaded");
@@ -250,6 +254,10 @@ async function activatePdfPreview(root) {
   } catch (error) {
     viewer.dataset.loading = "false";
     shell?.classList.add("is-error");
+
+    if (placeholder) {
+      placeholder.hidden = false;
+    }
 
     if (placeholder && viewer.dataset.errorLabel) {
       placeholder.textContent = viewer.dataset.errorLabel;
